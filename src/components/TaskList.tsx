@@ -32,7 +32,13 @@ export function TaskList() {
   function handleToggleTaskCompletion(id: number) {
     const task = tasks
     const newArray = task.findIndex(item => item.id === id)
-    task[newArray].isComplete = true;
+
+    if (task[newArray].isComplete === true) {
+      task[newArray].isComplete = false;
+    } else {
+      task[newArray].isComplete = true;
+
+    }
 
     setTasks([...task])
   }
