@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import '../styles/tasklist.scss'
 
@@ -13,7 +13,18 @@ interface Task {
 export function TaskList() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTaskTitle, setNewTaskTitle] = useState('');
+  const localTasks = localStorage.getItem("@todoTasks");
 
+  useEffect(() => {
+    if (localTasks) {
+      setTasks(JSON.parse(localTasks))
+    } 
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem("@todoTasks", JSON.stringify(tasks))
+  }, [tasks]);
+  
   function handleCreateNewTask() {
     if (newTaskTitle) {
       const task = {
